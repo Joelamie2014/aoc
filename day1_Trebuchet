@@ -1,0 +1,19 @@
+#!/bin/python
+
+import re
+
+def line(string):
+    string_list = [["one", "1"], ["two", "2"], ["three", "3"], ["four", "4"], ["five", "5"], ["six", "6"], ["seven", "7"], ["eight", "8"], ["nine", "9"]] 
+
+    letters = ""
+    digits = ""
+    for letter in string:
+        letters += letter
+        for item in string_list:
+            if re.search(item[0], letters) or re.search(item[1], letters):
+                letters = letters[-1]
+                digits += item[1]
+    lastdigit = digits[-1]
+    firstdigit = digits[0]
+    value = int(10 * int(firstdigit) + int(lastdigit))
+    return value
