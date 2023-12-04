@@ -1,0 +1,54 @@
+#!/bin/python
+
+import re
+
+#data = ["Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green", "Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue", "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red", "Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red", "Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"]
+
+data = []
+with open("H:\Tasks\Coding\Python\work\ssh\AOC\Day2\data.txt", 'r') as importfile:
+    importfile.seek(0)
+    for line in importfile.readlines():
+        data.append(line.rstrip("\n"))
+importfile.close()
+
+id_list = []
+for id, game in enumerate(data):
+    id_list.append(id + 1)
+
+#print(id_list)
+temp = []
+multiplie = []
+for id, game in enumerate(data):
+    red = []
+    green = []
+    blue = []
+
+    for item in game.split(":")[1].strip().split(";"):
+        for sub_item in item.strip().split(","):
+            #print(sub_item)
+            number = re.search(r"\d+", sub_item.lstrip()).group()
+            color = re.search(r"blue|green|red", sub_item.lstrip()).group()
+            if color == "red":
+                if number not in red:
+                    red.append(int(number))
+            if color == "blue":
+                if number not in blue:
+                    blue.append(int(number))
+            if color == "green":
+                if number not in green:
+                    green.append(int(number))
+
+    #print(red)
+    print ("id is: " + str(id + 1))
+    max_red = max(red)
+    max_green = max(green)
+    max_blue = max(blue)
+    print("max red is: " + str(max_red))
+    print("max green is: " + str(max_green))
+    print("max_blue is: " + str(max_blue))
+    multiplie.append(max_red * max_green * max_blue)
+
+
+print(multiplie)
+print(sum(multiplie))
+
